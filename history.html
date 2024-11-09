@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical History Entry</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .input-group input, .input-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        .input-group textarea {
+            resize: vertical;
+            height: 100px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .success {
+            color: green;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .history-list {
+            margin-top: 30px;
+        }
+
+        .history-item {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .history-item p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Add Medical History</h1>
+
+        <form id="medical-history-form">
+            <div class="input-group">
+                <label for="condition">Medical Condition</label>
+                <input type="text" id="condition" name="condition" placeholder="Enter your medical condition" required>
+            </div>
+
+            <div class="input-group">
+                <label for="treatment">Treatment</label>
+                <textarea id="treatment" name="treatment" placeholder="Enter your treatment details" required></textarea>
+            </div>
+
+            <div class="input-group">
+                <label for="date">Date of Diagnosis</label>
+                <input type="date" id="date" name="date" required>
+            </div>
+
+            <button type="submit">Add New Entry</button>
+        </form>
+
+        <div id="message"></div>
+
+        <!-- Section for displaying previous entries -->
+        <div class="history-list" id="history-list">
+            <h2>Previous Entries</h2>
+            <div id="history-content"></div>
+        </div>
+    </div>
+
+    <script>
+        // Handle form submission
+        document.getElementById('medical-history-form').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            // Clear previous messages
+            document.getElementById('message').innerHTML = '';
+
+            // Get the form data
+            const condition = document.getElementById('condition').value;
+            const treatment = document.getElementById('treatment').value;
+            const date = document.getElementById('date').value;
+
+            // Validate inputs
+            if (!condition || !treatment || !date) {
+                document.getElementById('message').innerHTML = '<p class="error">Please fill in all fields.</p>';
+                return;
+            }
+
+            const data = {
+                condition: condition,
+                treatment: treatment,
+                date: date
+            };
+
+            try {
+                const response = await fetch('/api/medical-history', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    document.getElementById('message').innerHTML = `<p class="success">${result.message}</p>`;
+                    document.getElementById('medical-history-form').reset();
+                    loadMedicalHistory(); // Refresh the medical history list
+                } else {
+                    document.getElementById('message').innerHTML = `<p class="error">${result.message}</p>`;
+                }
+            } catch (error) {
+                document.getElementById('message').innerHTML = `<p class="error">An error occurred: ${error.message}</p>`;
+            }
+        });
+
+        // Function to load and display medical history
+        async function loadMedicalHistory() {
+            try {
+                const response = await fetch('/api/medical-history');
+                const data = await response.json();
+
+                let historyContent = '';
+                data.forEach(entry => {
+                    const entryDate = new Date(entry.date).toLocaleDateString();
+                    historyContent += `
+                        <div class="history-item">
+                            <p><strong>Condition:</strong> ${entry.condition}</p>
+                            <p><strong>Treatment:</strong> ${entry.treatment}</p>
+                            <p><strong>Date of Diagnosis:</strong> ${entryDate}</p>
+                        </div>
+                    `;
+                });
+
+                document.getElementById('history-content').innerHTML = historyContent;
+
+            } catch (error) {
+                document.getElementById('history-content').innerHTML = '<p class="error">Failed to load medical history entries.</p>';
+            }
+        }
+
+        // Load medical history when the page is loaded
+        window.onload = loadMedicalHistory;
+    </script>
+
+</body>
+</html>

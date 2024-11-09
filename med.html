@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dosage Reminder</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .sticky-header {
+            position: sticky;
+            top: 0; /* Stick to the top */
+            background: linear-gradient(135deg, #eef6f7, #8fdfe3); /* Gradient background */
+            padding: 10px; /* Padding around the text */
+            border-bottom: 2px solid #ccc; /* Optional border for separation */
+            z-index: 100; /* Ensure it stays above other content */
+        }
+
+        /* Style for the main container */
+        .container {
+            max-width: 1200px; /* Increased width for better layout */
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        /* Heading style */
+        h1 {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Style for the form group elements */
+        .form-group {
+            display: flex; /* Use flexbox for side-by-side layout */
+            justify-content: space-between; /* Space between the boxes */
+            margin-bottom: 20px;
+            flex-wrap: wrap; /* Allow wrapping of boxes to the next line */
+        }
+
+        /* Individual medication box style */
+        .medication-box {
+            flex: 1 1 calc(50% - 20px); /* Allow boxes to grow equally and take up half the width minus margin */
+            margin: 10px; /* Add some margin between the boxes */
+            text-align: left; /* Align text to the left */
+            border: 1px solid #ccc; /* Optional: Add border for visual separation */
+            border-radius: 5px; /* Optional: Rounded corners */
+            padding: 20px; /* Increased padding for a larger box */
+            background-color: #ffffff; /* Optional: White background for boxes */
+            box-sizing: border-box; /* Ensure padding and border are included in width */
+        }
+
+        /* Label styles */
+        label {
+            display: block;
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        /* Fixed input styles */
+        .fixed-input {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #e9ecef; /* Light gray background to indicate it's fixed */
+            color: #333;
+            box-sizing: border-box;
+            text-align: left; /* Align text to the left */
+            pointer-events: none; /* Prevent interaction */
+        }
+
+        /* Button styles */
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Style for the reminders list heading */
+        h2 {
+            font-size: 1.5em;
+            color: #333;
+            margin-top: 30px;
+            margin-bottom: 10px;
+        }
+
+        /* Style for reminders list */
+        #remindersList {
+            text-align: left; /* Align text to the left */
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc; /* Optional: Add border for visual separation */
+            border-radius: 5px; /* Optional: Rounded corners */
+            background-color: #f0f0f0; /* Light background for reminders */
+        }
+
+        /* Style for the reminder message */
+        #reminder-message {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc; /* Optional: Add border for visual separation */
+            border-radius: 5px; /* Optional: Rounded corners */
+            background-color: #e0ffe0; /* Light green background for reminders */
+        }
+    </style>
+
+<h1 class="sticky-header">HOPE</h1>
+<div class="container">
+    <h1>Dosage Reminder</h1>
+    <button onclick="window.location.href='home.html'" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
+        Back to Home
+    </button>
+    <div class="form-group">
+        <div class="medication-box">
+            <label for="medName1">Medication Name:</label>
+            <div class="fixed-input" id="medName1">Aspirin</div><br><br>
+            <label>Dosage:</label>
+            <div class="fixed-input">2 pills</div><br><br>
+            <img src="aspirin.jpg" alt="Aspirin" width="300" height="300">
+            <center><button onclick="addReminder('Aspirin', '2 pills')">Add Reminder</button></center>
+        </div>
+
+        <div class="medication-box">
+            <label for="medName2">Medication Name:</label>
+            <div class="fixed-input" id="medName2">Inhaler</div><br><br>
+            <label>Dosage:</label>
+            <div class="fixed-input">1 puff</div><br><br>
+            <img src="inhaler.jpg" alt="Inhaler" width="300" height="300">
+            <center><button onclick="addReminder('Inhaler', '1 puff')">Add Reminder</button></center>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="medication-box">
+            <label for="medName3">Medication Name:</label>
+            <div class="fixed-input" id="medName3">Levonorgestrel</div><br><br>
+            <label>Dosage:</label>
+            <div class="fixed-input">1 pill</div><br><br>
+            <img src="Levonorgestrel.png" alt="Levonorgestrel" width="300" height="300">
+            <center><button onclick="addReminder('Levonorgestrel', '1 pill')">Add Reminder</button></center>
+        </div>
+
+        <div class="medication-box">
+            <label for="medName4">Medication Name:</label>
+            <div class="fixed-input" id="medName4">Lovaza</div><br><br>
+            <label>Dosage:</label>
+            <div class="fixed-input">2 pills</div><br><br>
+            <img src="crestor.jpg" alt="Lovaza" width="300" height="300">
+            <center><button onclick="addReminder('Lovaza', '2 pills')">Add Reminder</button></center>
+        </div>
+    </div>
+
+    <h2>Reminders</h2>
+    <div id="remindersList"></div>
+    
+    <!-- Reminder Message Display -->
+    <div id="reminder-message" style="display: none;">
+        <h2 id="reminder-text"></h2>
+    </div>
+</div>
+
+<script>
+    function addReminder(medicationName, dosage) {
+        // Create a reminder message
+        const reminderMessage = `${medicationName}: ${dosage}`;
+
+        // Create a new div element for the reminder
+        const reminderDiv = document.createElement('div');
+        reminderDiv.textContent = reminderMessage;
+
+        // Create a "Mark as Taken" button
+        const markTakenButton = document.createElement('button');
+        markTakenButton.textContent = 'Mark as Taken';
+        markTakenButton.style.marginLeft = '10px';
+        markTakenButton.onclick = function() {
+            reminderDiv.style.textDecoration = 'line-through'; // Strike through the text
+            markTakenButton.disabled = true; // Disable the button after marking
+        };
+
+        // Append the button to the reminder div
+        reminderDiv.appendChild(markTakenButton);
+
+        // Add the new reminder to the reminders list
+        const remindersList = document.getElementById('remindersList');
+        remindersList.appendChild(reminderDiv);
+
+        // Show the reminder message section
+        const reminderMessageDiv = document.getElementById('reminder-message');
+        reminderMessageDiv.style.display = 'block';
+        document.getElementById('reminder-text').textContent = `Reminder set for ${reminderMessage}`;
+    }
+</script>
+
+
+</body>
+</html>

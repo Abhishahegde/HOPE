@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+    <head>
+        <title>HOPE</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                background-image: url("hope.png"); /* Set the background image */
+                background-size: cover;
+                background-position: center;
+                background-attachment: fixed; /* Makes the background stay fixed when scrolling */
+                font-family: Arial, Helvetica, sans-serif;
+                height: 100vh; /* Ensures the body takes the full viewport height */
+            }
+
+            .topnav {
+                overflow: hidden;
+                background-color: rgb(198, 4, 91);
+                height: 70px;
+                border: 2px solid black;
+                font-family: 'Courier New', Courier, monospace;
+                position: fixed; /* Fixed navbar to the top */
+                width: 100%;
+                z-index: 1; /* Ensures the navbar is on top */
+                top: 0;
+            }
+
+            .topnav a {
+                float: left;
+                color: #f2f2f2;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+                font-size: 35px;
+                font-weight: bold;
+            }
+
+            .topnav-right {
+                float: right;
+            }
+
+            .screen {
+                margin-top: 90px; /* Adds space for the fixed navbar */
+                padding: 20px;
+                text-align: center;
+                min-height: 100%; /* Ensures screen takes full height */
+            }
+
+            .button {
+                background-color: #4CAF50; /* Green */
+                border: none;
+                color: white;
+                padding: 16px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 10px;
+                transition-duration: 0.2s;
+                cursor: pointer;
+                border-radius: 5px;
+            }
+
+            .button1 {
+                background-color: transparent;
+                color: rgb(16, 13, 13); /* black */
+                border: 3px solid #4CAF50;
+            }
+
+            .button1:hover {
+                background-color: #4CAF50;
+                color: white;
+            }
+
+            .button2 {
+                background-color: transparent;
+                color: rgb(6, 3, 3);
+                border: 3px solid rgba(31, 58, 147, 1);
+            }
+
+            .button2:hover {
+                background-color: rgba(31, 58, 147, 1);
+                color: white;
+            }
+
+            .button3 {
+                background-color: transparent;
+                color: rgb(7, 7, 7);
+                border: 3px solid #f44336;
+            }
+
+            .button3:hover {
+                background-color: #f44336;
+                color: white;
+            }
+
+            .button4 {
+                background-color: transparent;
+                color: rgb(9, 7, 7);
+                border: 3px solid rgba(249, 105, 14, 1);
+            }
+
+            .button4:hover {
+                background-color: rgba(249, 105, 14, 1);
+                color: white;
+            }
+
+            .button5 {
+                background-color: transparent;
+                color: rgb(13, 12, 12);
+                border: 3px solid #b40a70;
+            }
+
+            .button5:hover {
+                background-color: #8d2663;
+                color: white;
+            }
+
+            .button6 {
+                background-color: transparent;
+                color: rgb(13, 12, 12);
+                border: 3px solid #8a0526;
+            }
+
+            .button6:hover {
+                background-color: #470314;
+                color: white;
+            }
+
+            .message {
+                display: none;
+                font-size: 1.2em;
+                color: #333;
+                background-color: #f0e68c;
+                padding: 10px;
+                margin-top: 20px;
+                text-align: center;
+                border-radius: 8px;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div class="topnav">
+            <a class="active" href="home.html"></a>
+            <a href="home.html">HOPE</a>
+            <div class="topnav-right">
+              <a href="login.html">logout</a>
+            </div>
+        </div>
+
+        <div class="screen">
+            <form>
+                <button class="button button2" type="submit" formaction="med.html">DOSE USAGE</button>
+                <button class="button button3" type="button" onclick="callEmergency()">HELPLINE</button>
+                <script>
+                    function callEmergency() {
+                        window.location.href = "tel:108"; // This will trigger the phone's dialer with the number 108
+                    }
+                </script>
+                <button class="button button4" type="submit" formaction="HR.html">HOME REMEDIES</button>
+                <button class="button button5" type="submit" formaction="contact.html">EMERGENCY CONTACT</button>
+                <!-- New button for monitor.html -->
+                <button class="button button1" type="submit" formaction="monitor.html">MONITOR</button> <!-- Added this line -->
+            </form>
+        </div>
+
+    </body>
+</html>

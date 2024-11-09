@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calories Burned</title>
+    <link rel="stylesheet" href="monitor.css">
+    <style>
+        body {
+            background-image: url('burned.jpg'); /* Ensure this is the correct path to your image */
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .calories-container {
+            background: rgba(0, 0, 0, 0.6); /* Transparent background for readability */
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+        input[type="number"], button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #ff5733; /* Color for the button */
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        table {
+            margin-top: 20px;
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid white;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        #calories-burned-table {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="calories-container">
+        <h1>Track Your Calories Burned</h1>
+        <form id="caloriesForm">
+            <label for="calories">Enter Calories Burned:</label>
+            <input type="number" id="calories" name="calories" placeholder="Enter calories burned..." required>
+            <button type="submit">Submit</button>
+        </form>
+
+        <!-- Button to show calories burned entries -->
+        <button id="show-calories-burned-btn">Show Calories Burned Entries</button>
+
+        <!-- Table to display entries -->
+        <table id="calories-burned-table">
+            <thead>
+                <tr>
+                    <th>Calories Burned</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody id="calories-burned-tbody">
+                <!-- Entries will be displayed here -->
+            </tbody>
+        </table>
+
+        <p id="responseMessage"></p>
+
+        <!-- Back to Monitor Button -->
+        <a href="monitor.html" style="display: block; margin-top: 20px; color: white; font-size: 16px; text-decoration: none;">
+            <button style="background-color: #007bff;">Back to Monitor</button>
+        </a>
+    </div>
+
+    <script>
+        // Submit calories burned data to server
+        document.getElementById('caloriesForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const caloriesValue = document.getElementById('calories').value;
+
+            // Send POST request to save calories burned
+            fetch('http://localhost:3000/api/calories-burned', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ calories: caloriesValue })
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.text(); // Process server response
+                } else {
+                    throw new Error('Failed to submit data');
+                }
+            })
+            .then(data => {
+                document.getElementById('responseMessage').textContent = data;
+                document.getElementById('calories').value = ''; // Clear input field after submission
+            })
+            .catch(error => {
+                document.getElementById('responseMessage').textContent = 'Error submitting data';
+                console.error(error); // Log error for debugging
+            });
+        });
+
+        // Show the calories burned entries when the button is clicked
+        document.getElementById('show-calories-burned-btn').addEventListener('click', async function() {
+            try {
+                const response = await fetch('http://localhost:3000/api/calories-burned');
+                if (response.ok) {
+                    const caloriesBurnedData = await response.json();
+                    const tbody = document.getElementById('calories-burned-tbody');
+                    tbody.innerHTML = ''; // Clear existing table rows
+
+                    // Populate table with calories burned entries
+                    caloriesBurnedData.forEach(entry => {
+                        const row = document.createElement('tr');
+
+                        const caloriesCell = document.createElement('td');
+                        caloriesCell.textContent = entry.calories;
+
+                        const dateCell = document.createElement('td');
+                        const date = new Date(entry.date);
+                        dateCell.textContent = date.toLocaleDateString();
+
+                        const timeCell = document.createElement('td');
+                        timeCell.textContent = date.toLocaleTimeString();
+
+                        row.appendChild(caloriesCell);
+                        row.appendChild(dateCell);
+                        row.appendChild(timeCell);
+                        tbody.appendChild(row);
+                    });
+
+                    // Show the table with the calories burned data
+                    document.getElementById('calories-burned-table').style.display = 'table';
+                } else {
+                    alert('Failed to fetch calories burned data.');
+                }
+            } catch (error) {
+                console.error('Error fetching calories burned data:', error);
+            }
+        });
+    </script>
+</body>
+</html>

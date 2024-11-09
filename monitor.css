@@ -1,0 +1,129 @@
+/* General Body Styling (For Monitor Page) */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    height: 100vh; /* Full height of the viewport */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centers content vertically */
+    align-items: center; /* Centers content horizontally */
+    background-image: url('monitor-background.jpg'); /* Set your background image */
+    background-size: cover;
+    background-position: center;
+}
+
+/* Navigation Bar Styling */
+.navbar {
+    width: 100%;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.nav-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 12px;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.nav-link:hover {
+    background-color: #ff5722; /* Orange color on hover */
+}
+
+/* Welcome Section (Centered) */
+.welcome-section {
+    text-align: center;
+    margin-top: 100px; /* Spacing between navbar and title */
+}
+
+.welcome-section h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+    color: #4CAF50; /* Green color for the title */
+}
+
+.welcome-section p {
+    font-size: 18px;
+    color: #555;
+}
+
+/* Features Section (Centered Cards) */
+.features-section {
+    display: flex;
+    justify-content: center; /* Centers the cards horizontally */
+    align-items: center; /* Centers the cards vertically */
+    flex-wrap: wrap; /* Allows wrapping if necessary */
+    margin-top: 50px; /* Spacing between title and cards */
+}
+
+/* Individual Feature Cards */
+.feature-card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 15px;
+    width: 250px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 4px solid transparent; /* Border for color effect */
+    background-image: linear-gradient(135deg, #ff66cc, #ffcc00); /* Gradient background */
+}
+
+/* Hover Effects on Cards */
+.feature-card:hover {
+    transform: translateY(-10px); /* Elevates the card on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    background-image: linear-gradient(135deg, #ff66cc, #ff6600); /* Hover gradient effect */
+    border-color: #ff6600; /* Color border effect */
+}
+
+/* Specific Card Colors */
+#steps-card {
+    background-image: linear-gradient(135deg, #4CAF50, #8BC34A); /* Green gradient for Steps */
+}
+
+#calories-card {
+    background-image: linear-gradient(135deg, #FF9800, #FF5722); /* Orange gradient for Calories Intake */
+}
+
+#burned-card {
+    background-image: linear-gradient(135deg, #2196F3, #03A9F4); /* Blue gradient for Calories Burned */
+}
+
+/* Card Text */
+.feature-card h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #fff; /* White color for heading */
+}
+
+.feature-card p {
+    font-size: 16px;
+    color: #fff; /* White color for description */
+    margin-bottom: 20px;
+}
+
+/* Feature Link Button */
+.feature-link {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #333;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.feature-link:hover {
+    background-color: #555;
+}

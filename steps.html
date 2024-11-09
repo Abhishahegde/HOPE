@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steps Tracking</title>
+    <link rel="stylesheet" href="monitor.css">
+    <style>
+        body {
+            background-image: url('steps.jpg');
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .steps-container {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+        input[type="number"], button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        table {
+            margin-top: 20px;
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid white;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        #steps-table {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="steps-container">
+        <h1>Track Your Steps</h1>
+        <form id="stepsForm">
+            <label for="steps">Enter Steps:</label>
+            <input type="number" id="steps" name="steps" placeholder="Enter steps..." required>
+            <button type="submit">Submit</button>
+        </form>
+
+        <button id="show-steps-btn">Show Steps Entries</button>
+
+        <table id="steps-table">
+            <thead>
+                <tr>
+                    <th>Steps</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody id="steps-tbody">
+                <!-- Entries will be displayed here -->
+            </tbody>
+        </table>
+
+        <p id="responseMessage"></p>
+
+        <!-- Back to Monitor Button -->
+        <a href="monitor.html" style="display: block; margin-top: 20px; color: white; font-size: 16px; text-decoration: none;">
+            <button style="background-color: #007bff;">Back to Monitor</button>
+        </a>
+    </div>
+
+    <script>
+        // Submit the form to save steps data
+        document.getElementById('stepsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const stepsValue = document.getElementById('steps').value;
+
+            // Send steps data to server
+            fetch('http://localhost:3000/api/steps', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ steps: stepsValue })
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.text(); // Process server response
+                } else {
+                    throw new Error('Failed to submit data');
+                }
+            })
+            .then(data => {
+                document.getElementById('responseMessage').textContent = data;
+                document.getElementById('steps').value = ''; // Clear input
+            })
+            .catch(error => {
+                document.getElementById('responseMessage').textContent = 'Error submitting data';
+                console.error(error); // Log error for debugging
+            });
+        });
+
+        // Show steps entries with date and time
+        document.getElementById('show-steps-btn').addEventListener('click', async function() {
+            try {
+                const response = await fetch('http://localhost:3000/api/steps');
+                if (response.ok) {
+                    const stepsData = await response.json();
+                    const tbody = document.getElementById('steps-tbody');
+                    tbody.innerHTML = ''; // Clear any existing rows
+
+                    stepsData.forEach(entry => {
+                        const row = document.createElement('tr');
+
+                        const stepsCell = document.createElement('td');
+                        stepsCell.textContent = entry.steps;
+
+                        const dateCell = document.createElement('td');
+                        const date = new Date(entry.date);
+                        dateCell.textContent = date.toLocaleDateString();
+
+                        const timeCell = document.createElement('td');
+                        timeCell.textContent = date.toLocaleTimeString();
+
+                        row.appendChild(stepsCell);
+                        row.appendChild(dateCell);
+                        row.appendChild(timeCell);
+                        tbody.appendChild(row);
+                    });
+
+                    document.getElementById('steps-table').style.display = 'table'; // Show table
+                } else {
+                    alert('Failed to fetch steps data.');
+                }
+            } catch (error) {
+                console.error('Error fetching steps data:', error);
+            }
+        });
+    </script>
+</body>
+</html>

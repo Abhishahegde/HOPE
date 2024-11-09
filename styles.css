@@ -1,0 +1,223 @@
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  .container {
+    width: 80%;           /* Set width for the parent container */
+    margin: 0 auto;       /* Centers the container */
+  }
+  
+  
+  body {
+    font-family: Arial, sans-serif;
+    color: #ffffff;
+    background-color: #010101;
+    cursor: none;
+  }
+  
+  /* Navbar Styles */
+  .navbar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    z-index: 1000;
+  }
+  
+  .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: auto;
+    width: 100%;
+  }
+  
+  .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ff4b2b;
+  }
+  
+  .nav-links {
+    display: flex;
+    list-style: none;
+  }
+  
+  .nav-links li {
+    margin: 0 15px;
+  }
+  
+  .nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+  }
+  
+  /* Hero Section */
+  .hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: url('hh.png') no-repeat center center/cover;
+    text-align: center;
+    position: relative;
+    padding: 0 20px;
+  }
+  
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(11, 11, 11, 0.3); /* Light fog overlay */
+    filter: blur(8px); /* Blur to create a misty effect */
+    z-index: 0;
+  }
+  
+  .hero-content {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .hero-content h1 {
+    font-family: 'Verdana', sans-serif; /* Clear font */
+    font-size: 60px; /* Large for emphasis */
+    line-height: 1.4;
+    color: #ffffff; /* White text */
+    text-align: center;
+    font-weight: 600;
+    position: relative;
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5); /* Soft text shadow */
+  }
+  
+  .hero-content h1 span {
+    color: #ff4b2b; /* Highlighted color */
+    font-size: 64px; /* Larger size for emphasis */
+    font-weight: 700; /* Bold */
+    letter-spacing: 2px;
+  }
+  
+  .hero-content p {
+    margin: 20px 0;
+    font-size: 18px;
+    color: #ccc;
+  }
+  
+  .hero-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #ff4b2b;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 15px;
+  }
+  
+  .contact-email {
+    margin-top: 10px;
+    color: #bbb;
+  }
+  
+  /* Cursor Effect */
+  .cursor {
+    pointer-events: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10000;
+  }
+  
+  .cursor__ball {
+    position: fixed;
+    mix-blend-mode: difference;
+  }
+  
+  .cursor__ball--big circle,
+  .cursor__ball--small circle {
+    fill: #f7f8fa;
+  }
+  
+  /* Responsive Design */
+  
+  /* Navbar adjustments for smaller screens */
+  @media screen and (max-width: 768px) {
+    .navbar-container {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .nav-links {
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
+    }
+  
+    .nav-links li {
+      margin: 10px 0;
+    }
+  
+    .hero-content h1 {
+      font-size: 40px;
+    }
+  
+    .hero-content p {
+      font-size: 16px;
+    }
+  
+    .hero-button {
+      padding: 8px 16px;
+    }
+  }
+  
+  /* Further adjustments for very small screens (phones) */
+  @media screen and (max-width: 480px) {
+    .hero {
+      height: 80vh;
+      padding: 0 10px;
+    }
+  
+    .hero-content h1 {
+      font-size: 32px;
+    }
+  
+    .hero-content p {
+      font-size: 14px;
+    }
+  
+    .hero-button {
+      padding: 6px 12px;
+    }
+  }
+  #habit-heading {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    animation: float 3s ease-in-out infinite;
+    display: inline-block;
+    margin: 0 auto;      /* Ensures the element is centered within its container */
+    width: 100%;
+  }
+ 
+  
+  
+  /* Floating effect */
+  @keyframes float {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  
+  
